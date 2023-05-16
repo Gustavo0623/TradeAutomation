@@ -1,0 +1,11 @@
+# Virtual environment
+env/
+
+# Bytecode cache
+__pycache__/
+
+# Local configuration
+.env
+config.ini
+
+.DS_Store
