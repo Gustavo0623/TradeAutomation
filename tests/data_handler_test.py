@@ -52,15 +52,30 @@ class TestDataHandler(unittest.TestCase):
         self.assertEqual(actual_data, [])
 
     def test_load_trades_data_missing_columns(self):
-        # Create a test CSV file with missing columns
-        # file_path = 'path/to/file_with_missing_columns.csv'
+        # Define the test data files with different combinations of missing columns
+        test_files = [
+            'data/test_trades_missing_columns_1.csv',
+            'data/test_trades_missing_columns_2.csv',
+            'data/test_trades_missing_columns_3.csv',
+            # Add more test files with different missing columns
+        ]
 
-        # Create an instance of the DataHandler class
-        # data_handler = DataHandler(file_path='path/to/file_with_missing_columns.csv')
+        for test_file in test_files:
+            # Create an instance of the DataHandler class
+            data_handler = DataHandler(test_file)
 
-        # Call the load_trades_data method
-        # Assert that the appropriate exception is raised or the missing columns are handled correctly
-        pass
+            # Load the test data file
+            data_handler.file_path = test_file
+
+            # Call the load_trades_data method
+            actual_data = data_handler.load_trades_data()
+
+            # Get the expected length by counting the rows in the test data file
+            with open(test_file, 'r') as file:
+                expected_length = sum(1 for _ in file) - 1  # Subtract 1 to exclude the header row
+
+            # Assert that the length of actual_data matches the expected length
+            self.assertEqual(len(actual_data), expected_length)
 
     def test_load_trades_data_invalid_data(self):
         # Create a test CSV file with invalid data
