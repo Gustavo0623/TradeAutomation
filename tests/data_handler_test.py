@@ -1,6 +1,7 @@
 import unittest
 from src.data_handler import DataHandler
 from datetime import datetime
+import csv
 
 class TestDataHandler(unittest.TestCase):
     def test_load_trades_data(self):
@@ -32,11 +33,11 @@ class TestDataHandler(unittest.TestCase):
         # Check if the actual data matches the expected data
         self.assertEqual(len(actual_data), len(expected_data))
         for actual_trade, expected_trade in zip(actual_data, expected_data):
-            self.assertEqual(actual_trade.trade_id, expected_trade["trade_id"])
+            self.assertEqual(actual_trade.trade_id, int(expected_trade["trade_id"]))
             self.assertEqual(actual_trade.ticker_symbol, expected_trade["ticker_symbol"])
-            self.assertEqual(datetime.strptime(actual_trade.trade_date, '%Y-%m-%d %H:%M:%S').date().isoformat(), expected_trade["trade_date"])
-            self.assertEqual(actual_trade.quantity, expected_trade["quantity"])
-            self.assertEqual(actual_trade.price, expected_trade["price"])
+            self.assertEqual(str(actual_trade.trade_date), expected_trade["trade_date"])
+            self.assertEqual(actual_trade.quantity, float(expected_trade["quantity"]))
+            self.assertEqual(actual_trade.price, float(expected_trade["price"]))
 
     def test_load_trades_data_empty_file(self):
         # Create a test CSV file with no data
@@ -69,6 +70,7 @@ class TestDataHandler(unittest.TestCase):
 
             # Call the load_trades_data method
             actual_data = data_handler.load_trades_data()
+            print(actual_data)
 
             # Get the expected length by counting the rows in the test data file
             with open(test_file, 'r') as file:
@@ -78,15 +80,38 @@ class TestDataHandler(unittest.TestCase):
             self.assertEqual(len(actual_data), expected_length)
 
     def test_load_trades_data_invalid_data(self):
-        # Create a test CSV file with invalid data
-        # file_path = 'path/to/file_with_invalid_data.csv'
+        # Create a test CSV files with invalid data
+        test_files = [
+            'data/test_trades_invalid_data_1.csv',
+            'data/test_trades_invalid_data_2.csv',
+            'data/test_trades_invalid_data_3.csv',
+        ]
 
-        # Create an instance of the DataHandler class
-        # data_handler = DataHandler(file_path='path/to/file_with_invalid_data.csv')
+        for test_file in test_files:
+            # Create an instance of the DataHandler class
+            data_handler = DataHandler(test_file)
 
-        # Call the load_trades_data method
-        # Assert that the appropriate exception is raised or the invalid data is handled correctly
-        pass
+            # Load the test data file
+            data_handler.file_path = test_file
+
+            # Call the load_trades_data method
+            actual_data = data_handler.load_trades_data()
+            print(len(actual_data))
+
+            # Get the expected length based on the number of errors in the test file
+            num_errors = 0
+            with open(test_file, 'r') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if any(field not in row for field in ['trade_id', 'symbol', 'timestamp', 'quantity', 'price']):
+                        num_errors += 1
+
+            expected_length = len(actual_data) + num_errors
+
+            # Assert that the length of actual_data matches the expected length
+            self.assertEqual(len(actual_data), expected_length)
+
+
 
     def test_load_trades_data_large_file(self):
         # Create a test CSV file with a large number of rows
