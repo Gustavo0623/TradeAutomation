@@ -1,22 +1,23 @@
 import csv
-from trade import Trade
+from src.trade import Trade
 
 class DataHandler:
     def __init__(self, file_path):
         self.file_path = file_path
 
-    def read_csv(self):
+    def load_trades_data(self):
         trades = []
         with open(self.file_path, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 trade = Trade(
                     trade_id=row['trade_id'],
-                    symbol=row['symbol'],
-                    date=row['date'],
+                    ticker_symbol=row['symbol'],
+                    trade_date=row['timestamp'],  # Update the parameter name to 'trade_date'
                     quantity=row['quantity'],
                     price=row['price']
                 )
+
                 trades.append(trade)
         return trades
 

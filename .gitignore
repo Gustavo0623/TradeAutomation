@@ -5,7 +5,9 @@ env/
 __pycache__/
 
 # Local configuration
-.env
+.env/
 config.ini
 
 .DS_Store
+
+.vscode/
