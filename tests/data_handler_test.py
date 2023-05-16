@@ -38,6 +38,54 @@ class TestDataHandler(unittest.TestCase):
             self.assertEqual(actual_trade.quantity, expected_trade["quantity"])
             self.assertEqual(actual_trade.price, expected_trade["price"])
 
+    def test_load_trades_data_empty_file(self):
+        # Create a test CSV file with no data
+        # file_path = 'path/to/empty_file.csv'
+
+        # Create an instance of the DataHandler class
+        data_handler = DataHandler(file_path='data/empty_file.csv')
+
+        # Call the load_trades_data method
+        actual_data = data_handler.load_trades_data()
+
+        # Assert that the loaded data is an empty list
+        self.assertEqual(actual_data, [])
+
+    def test_load_trades_data_missing_columns(self):
+        # Create a test CSV file with missing columns
+        # file_path = 'path/to/file_with_missing_columns.csv'
+
+        # Create an instance of the DataHandler class
+        # data_handler = DataHandler(file_path='path/to/file_with_missing_columns.csv')
+
+        # Call the load_trades_data method
+        # Assert that the appropriate exception is raised or the missing columns are handled correctly
+        pass
+
+    def test_load_trades_data_invalid_data(self):
+        # Create a test CSV file with invalid data
+        # file_path = 'path/to/file_with_invalid_data.csv'
+
+        # Create an instance of the DataHandler class
+        # data_handler = DataHandler(file_path='path/to/file_with_invalid_data.csv')
+
+        # Call the load_trades_data method
+        # Assert that the appropriate exception is raised or the invalid data is handled correctly
+        pass
+
+    def test_load_trades_data_large_file(self):
+        # Create a test CSV file with a large number of rows
+        # file_path = 'path/to/large_file.csv'
+
+        # Create an instance of the DataHandler class
+        # data_handler = DataHandler(file_path='path/to/large_file.csv')
+
+        # Call the load_trades_data method
+        # actual_data = data_handler.load_trades_data()
+
+        # Assert that the loaded data is correct and the method performs efficiently
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
