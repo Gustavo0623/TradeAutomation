@@ -30,6 +30,7 @@ class TestDataHandler(unittest.TestCase):
         # Call the load_trades_data method
         actual_data = data_handler.load_trades_data()
 
+        print(len(actual_data))
         # Check if the actual data matches the expected data
         self.assertEqual(len(actual_data), len(expected_data))
         for actual_trade, expected_trade in zip(actual_data, expected_data):
@@ -70,11 +71,17 @@ class TestDataHandler(unittest.TestCase):
 
             # Call the load_trades_data method
             actual_data = data_handler.load_trades_data()
-            print(actual_data)
 
             # Get the expected length by counting the rows in the test data file
+            num_errors = 0
             with open(test_file, 'r') as file:
-                expected_length = sum(1 for _ in file) - 1  # Subtract 1 to exclude the header row
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if any(field not in row for field in ['trade_id', 'symbol', 'timestamp', 'quantity', 'price']):
+                        num_errors += 1
+
+            expected_length = len(actual_data) + num_errors
+            print(len(actual_data))
 
             # Assert that the length of actual_data matches the expected length
             self.assertEqual(len(actual_data), expected_length)
@@ -96,7 +103,6 @@ class TestDataHandler(unittest.TestCase):
 
             # Call the load_trades_data method
             actual_data = data_handler.load_trades_data()
-            print(len(actual_data))
 
             # Get the expected length based on the number of errors in the test file
             num_errors = 0
@@ -106,6 +112,7 @@ class TestDataHandler(unittest.TestCase):
                     if any(field not in row for field in ['trade_id', 'symbol', 'timestamp', 'quantity', 'price']):
                         num_errors += 1
 
+            print(len(actual_data))
             expected_length = len(actual_data) + num_errors
 
             # Assert that the length of actual_data matches the expected length

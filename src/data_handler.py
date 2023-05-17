@@ -5,7 +5,7 @@ from datetime import datetime
 class DataHandler:
     def __init__(self, file_path):
         self.file_path = file_path
-
+        
     def load_trades_data(self):
         trades = []
         valid_symbols = {'AAPL', 'GOOGL', 'AMZN', 'TSLA', 'MSFT', 'FB', 'JPM', 'V', 'BRK.B', 'NFLX'}
@@ -15,18 +15,9 @@ class DataHandler:
             for row in reader:
                 # column is missing in a specific row, the data in the subsequent columns will be shifted, potentially resulting in incorrect values. 
                 # conditional check if 
-                if 'trade_id' not in row:
-                    print("'trade_id' is missing")
-                if 'symbol' not in row:
-                    print("'symbol' is missing")
-                if 'timestamp' not in row:
-                    print("'timestamp' is missing")
-                if 'quantity' not in row:
-                    print("'quantity' is missing")
-                if 'price' not in row:
-                    print("'price' is missing")
+                if 'trade_id' not in row or 'symbol' not in row or 'timestamp' not in row or 'quantity' not in row or 'price' not in row:
+                    
                     continue
-
 
                 try:
                     # Validate and convert data types
@@ -53,8 +44,7 @@ class DataHandler:
 
                 except (ValueError, KeyError):
                     # Handle invalid data types or missing keys
-                    continue
-                
+                    continue       
         return trades
 
     def write_csv(self, trades):

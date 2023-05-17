@@ -1,6 +1,6 @@
 trade_id,timestamp,symbol,company,quantity,price,commission,trade_type,account_id
-1,2023-05-01,AAPL,Apple Inc.,100,152.50,10.00,BUY,1001
-2,2023-05-02,,Google,50,2510.25,15.00,SELL,1002
+1,2023-05-01 10:15:27,AAPL,Apple Inc.,100,152.50,10.00,BUY,1001
+2,2023-05-02 10:15:27,,Google,50,2510.25,15.00,SELL,1002
 3,,AMZN,Amazon.com Inc.,200,3450.75,12.50,BUY,1003
-4,2023-05-04,TSLA,Tesla Inc.,75,890.50,8.00,SELL,1004
-5,2023-05-05,MSFT,Microsoft Corporation,,298.30,9.50,BUY,1005
+4,2023-05-04 10:15:27,TSLA,Tesla Inc.,75,890.50,8.00,SELL,1004
+5,2023-05-05 10:15:27,MSFT,Microsoft Corporation,,298.30,9.50,BUY,1005
