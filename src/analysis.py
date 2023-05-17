@@ -6,6 +6,12 @@ class TradeAnalyzer:
     def __init__(self, trades):
         self.trades = trades
 
+    def calculate_average_price(self):
+        pass
+
+    def get_highest_volume_trades(self):
+        pass
+
     def calculate_portfolio_returns(self):
         # Calculate portfolio returns based on trade data
         # Implement the required calculations and return the results
