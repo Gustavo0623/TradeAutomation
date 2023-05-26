@@ -27,7 +27,20 @@ class TestAnalyzer(unittest.TestCase):
     def test_get_highest_volume_trades(self):
         # Test code for get_highest_volume_trades() method
         # ...
-        pass
+        self.maxDiff = None
+
+        # set expected data
+        expected_data = [['AMZN', 400], ['MSFT', 300], ['V', 240], ['AAPL', 200], ['JPM', 180], ['FB', 160], ['TSLA', 150], ['NFLX', 130], ['GOOGL', 100], ['BRK.B', 60]]
+
+        # create instance of TestAnalyzer class
+        analyzer = TradeAnalyzer(file_path='data/trades.csv')
+
+        # call calc avg price method
+        actual_data = analyzer.get_highest_volume_trades()
+        print(actual_data)
+
+        # check if actual matches expected
+        self.assertEqual(actual_data, expected_data)
         
     def test_calculate_portfolio_returns(self):
         # Create a sample list of trades for testing
