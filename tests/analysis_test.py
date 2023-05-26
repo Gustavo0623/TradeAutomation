@@ -4,10 +4,25 @@ from src.trade import Trade
 
 class TestAnalyzer(unittest.TestCase):
 
+    # currently set to get average price regardless of stock (needs to be adjusted to only get averages for each stock)
     def test_calculate_average_price(self):
         # Test code for calculate_average_price() method
         # ...
-        pass
+
+        self.maxDiff = None
+        
+        # set expected data
+        expected_data = [['AAPL', 155.0], ['GOOGL', 2510.25], ['AMZN', 3450.75], ['TSLA', 890.5], ['MSFT', 298.3], ['FB', 398.15], ['JPM', 149.75], ['V', 252.8], ['BRK.B', 3995.8], ['NFLX', 555.25]]
+
+        # create instance of TestAnalyzer class
+        analyzer = TradeAnalyzer(file_path='data/trades.csv')
+
+        # call calc avg price method
+        actual_data = analyzer.calculate_average_price()
+        print(actual_data)
+
+        # check if actual matches expected
+        self.assertEqual(actual_data, expected_data)
 
     def test_get_highest_volume_trades(self):
         # Test code for get_highest_volume_trades() method

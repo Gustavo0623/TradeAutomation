@@ -1,13 +1,56 @@
 # analysis.py
 
 # Import necessary modules
+import csv
+from src.trade import Trade
 
 class TradeAnalyzer:
-    def __init__(self, trades):
-        self.trades = trades
+    def __init__(self, file_path):
+        self.file_path = file_path
 
     def calculate_average_price(self):
-        pass
+
+        data = []
+
+        with open(self.file_path, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                symbol = row['symbol']
+                price = float(row['price'])
+
+                if len(data) == 0:
+                    price_arr = []
+                    price_arr.append(price)
+                    values = [symbol, price_arr]
+                    data.append(values)
+
+                elif len(data) > 0: 
+                    updated = bool(False)
+                    for value in data: 
+                        if value[0] == symbol:
+                            value[1].append(price)
+                            updated = bool(True)
+                            break
+                        elif value[0] != symbol:
+                            continue
+                    if updated == bool(False):
+                        price_arr = []
+                        price_arr.append(price)
+                        values = [symbol, price_arr]
+                        data.append(values)
+
+        if len(data) > 0:
+            for i in data:
+                if len(i[1]) == 0:
+                    continue
+                elif len(i[1]) >= 1:
+                    total = 0
+                    for price in i[1]:
+                        total += price
+                    length = len(i[1])
+                    i[1] = total / length 
+
+        return data
 
     def get_highest_volume_trades(self):
         pass
